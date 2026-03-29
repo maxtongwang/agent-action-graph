@@ -263,3 +263,22 @@ It's the **decision layer** — the thin, focused piece between "something happe
 ## License
 
 MIT
+
+## Inspiration: Decision Intelligence Runtime (O'Reilly)
+
+The [O'Reilly "Missing Layer in Agentic AI"](https://www.oreilly.com/radar/the-missing-layer-in-agentic-ai/) article proposes a **Decision Intelligence Runtime (DIR)** — a kernel-level execution boundary that treats agent output as untrusted proposals. DIR focuses on mission-critical safety (financial trading), with YAML contracts, JIT state verification, idempotency keys, and transactional rollback.
+
+action-graph and DIR are complementary:
+
+| | DIR | action-graph |
+|---|---|---|
+| Focus | Execution safety | Decision intelligence |
+| Audience | DevOps / compliance | Users + developers |
+| Learning | Static contracts | Confidence from patterns |
+| Conditions | Hardcoded limits | Natural language (LLM-evaluated) |
+
+### Concepts borrowed from DIR (future phases)
+
+- **Idempotency keys** — dedup actions on retry (hash trigger + action + params)
+- **Decision flow ID** — correlation key across propose → evaluate → approve → execute
+- **Drift detection** — for high-stakes actions, re-verify state before executing
