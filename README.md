@@ -1,6 +1,8 @@
-# action-graph
+# agent-action-graph
 
 > The missing decision layer between AI agent triggers and execution.
+>
+> Template-driven actions. LLM condition evaluation. Confidence-based auto-approval that learns from user patterns.
 
 ## Problem
 
@@ -15,7 +17,7 @@ Neither works for production workflows where **trust must be earned over time**.
 
 A new employee asks for approval on everything. Over time, they prove they make the right calls. The manager stops checking routine decisions and only reviews novel ones.
 
-**action-graph** brings this pattern to AI agents:
+**agent-action-graph** brings this pattern to AI agents:
 
 1. **Trigger** — something happens (message, webhook, cron, tool result)
 2. **Fan out** — enumerate possible actions from user-configured templates
@@ -69,7 +71,7 @@ Make AI agent workflows as reliable as human workflows — where autonomy is ear
 │       │              │              │                  │
 │       ▼              ▼              ▼                  │
 │  ┌──────────────────────────────────────────────┐    │
-│  │              action-graph                     │    │
+│  │              agent-action-graph                     │    │
 │  │                                               │    │
 │  │  Templates ──→ Evaluate ──→ Gate ──→ Learn   │    │
 │  │  (config)     (LLM)       (approve)  (track) │    │
@@ -85,7 +87,7 @@ Make AI agent workflows as reliable as human workflows — where autonomy is ear
 ## API
 
 ```typescript
-import { createActionGraph } from "@maxtongwang/action-graph";
+import { createActionGraph } from "@maxtongwang/agent-action-graph";
 
 const graph = createActionGraph({
   // Host provides LLM for condition evaluation
@@ -135,7 +137,7 @@ Each unique pattern tracks its own confidence independently.
 
 ## Visual Workflow (GUI Layer)
 
-action-graph supports rendering workflow graphs in two formats for user review and creation:
+agent-action-graph supports rendering workflow graphs in two formats for user review and creation:
 
 ### ASCII (Terminal / Chat)
 
@@ -208,13 +210,13 @@ Renders in GitHub READMEs, Notion, Slack, any markdown viewer.
 
 ## Web App Extension
 
-action-graph is designed to be embeddable in web applications:
+agent-action-graph is designed to be embeddable in web applications:
 
 ### REST API Wrapper
 
 ```typescript
-import { createActionGraph } from "@maxtongwang/action-graph";
-import { createServer } from "@maxtongwang/action-graph/server"; // optional
+import { createActionGraph } from "@maxtongwang/agent-action-graph";
+import { createServer } from "@maxtongwang/agent-action-graph/server"; // optional
 
 const graph = createActionGraph({ ... });
 const server = createServer(graph, { port: 3200 });
@@ -235,7 +237,7 @@ const server = createServer(graph, { port: 3200 });
 For apps that want a drop-in approval UI:
 
 ```html
-<action-graph-widget endpoint="http://localhost:3200" theme="dark" />
+<agent-action-graph-widget endpoint="http://localhost:3200" theme="dark" />
 ```
 
 Renders pending approvals, confidence scores, and workflow visualization.
@@ -268,14 +270,14 @@ MIT
 
 The [O'Reilly "Missing Layer in Agentic AI"](https://www.oreilly.com/radar/the-missing-layer-in-agentic-ai/) article proposes a **Decision Intelligence Runtime (DIR)** — a kernel-level execution boundary that treats agent output as untrusted proposals. DIR focuses on mission-critical safety (financial trading), with YAML contracts, JIT state verification, idempotency keys, and transactional rollback.
 
-action-graph and DIR are complementary:
+agent-action-graph and DIR are complementary:
 
-| | DIR | action-graph |
-|---|---|---|
-| Focus | Execution safety | Decision intelligence |
-| Audience | DevOps / compliance | Users + developers |
-| Learning | Static contracts | Confidence from patterns |
-| Conditions | Hardcoded limits | Natural language (LLM-evaluated) |
+|            | DIR                 | agent-action-graph                     |
+| ---------- | ------------------- | -------------------------------- |
+| Focus      | Execution safety    | Decision intelligence            |
+| Audience   | DevOps / compliance | Users + developers               |
+| Learning   | Static contracts    | Confidence from patterns         |
+| Conditions | Hardcoded limits    | Natural language (LLM-evaluated) |
 
 ### Concepts borrowed from DIR (future phases)
 
